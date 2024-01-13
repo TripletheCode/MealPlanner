@@ -6,11 +6,15 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            margin: 20px;
+            margin: 0;
+            padding: 0;
+            background-color: #222;
+            color: #fff;
         }
 
         h1 {
             text-align: center;
+            padding: 20px 0;
         }
 
         form {
@@ -19,6 +23,7 @@
             padding: 20px;
             border: 1px solid #ccc;
             border-radius: 5px;
+            background-color: #333;
         }
 
         label {
@@ -31,9 +36,10 @@
         }
 
         button {
-            display: block;
-            width: 100%;
+            display: inline-block;
+            width: 48%;
             padding: 10px;
+            margin-top: 10px;
             background-color: #4caf50;
             color: white;
             border: none;
@@ -41,8 +47,20 @@
             cursor: pointer;
         }
 
+        #clearBtn {
+            background-color: #f44336;
+            margin-right: 2%;
+        }
+
+        #generateBtn {
+            background-color: #4caf50;
+        }
+
         #mealPlan {
             margin-top: 20px;
+            background-color: #333;
+            padding: 20px;
+            border-radius: 5px;
         }
     </style>
 </head>
@@ -61,12 +79,23 @@
         <label for="nutFree">Nut-Free</label>
         <input type="checkbox" id="nutFree" name="nutFree">
 
-        <button type="button" onclick="generateMealPlan()">Generate Meal Plan</button>
+        <button id="clearBtn" type="button" onclick="clearSelection()">Clear Selection</button>
+        <button id="generateBtn" type="button" onclick="generateMealPlan()">Generate Meal Plan</button>
     </form>
 
     <div id="mealPlan"></div>
 
     <script>
+        function clearSelection() {
+            // Clear all checkbox selections
+            document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
+                checkbox.checked = false;
+            });
+
+            // Clear the meal plan display
+            document.getElementById('mealPlan').innerHTML = "";
+        }
+
         function generateMealPlan() {
             // Add logic to generate and display the meal plan based on user preferences
             // This can be done using JavaScript and could involve calling an API for meal suggestions
@@ -76,4 +105,4 @@
         }
     </script>
 </body>
-</html
+</html>
