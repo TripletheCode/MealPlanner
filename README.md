@@ -6,30 +6,33 @@
     <title>Meal Planner</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #222;
+            background-color: #333;
             color: #fff;
         }
 
         h1 {
             text-align: center;
             padding: 20px 0;
+            color: #4caf50;
         }
 
         form {
             max-width: 600px;
             margin: 20px auto;
             padding: 20px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            background-color: #333;
+            border: 1px solid #555;
+            border-radius: 10px;
+            background-color: #444;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
         }
 
         label {
             display: block;
             margin-bottom: 10px;
+            color: #ccc;
         }
 
         input[type="checkbox"] {
@@ -59,9 +62,18 @@
 
         #mealPlan {
             margin-top: 20px;
-            background-color: #333;
+            background-color: #444;
             padding: 20px;
-            border-radius: 5px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+
+        #mealPlan h2 {
+            color: #4caf50;
+        }
+
+        #mealPlan p {
+            margin-bottom: 10px;
         }
     </style>
 </head>
@@ -98,12 +110,50 @@
         }
 
         function generateMealPlan() {
-            // Add logic to generate and display the meal plan based on user preferences
-            // This can be done using JavaScript and could involve calling an API for meal suggestions
-            // For simplicity, let's assume a basic output for now
-            const mealPlan = document.getElementById('mealPlan');
-            mealPlan.innerHTML = "<h2>Your Meal Plan for the Week:</h2><p>Monday: Grilled Vegetables and Quinoa</p><p>Tuesday: Chicken Salad</p><p>Wednesday: Lentil Soup</p><p>Thursday: Spaghetti with Tomato Sauce</p><p>Friday: Baked Salmon with Steamed Broccoli</p><p>Saturday: Veggie Stir-Fry</p><p>Sunday: Quinoa Salad</p>";
+            // Get user preferences
+            const vegetarian = document.getElementById('vegetarian').checked;
+            const glutenFree = document.getElementById('glutenFree').checked;
+            const lowCarb = document.getElementById('lowCarb').checked;
+            const nutFree = document.getElementById('nutFree').checked;
+
+            // Sample meal plan (replace with actual logic or API call)
+            let mealPlanText = "<h2>Your Meal Plan for the Week:</h2>";
+
+            if (vegetarian) {
+                mealPlanText += "<p>Monday: Quinoa Salad</p>";
+                mealPlanText += "<p>Tuesday: Lentil Soup</p>";
+                mealPlanText += "<p>Wednesday: Veggie Stir-Fry</p>";
+            } else {
+                mealPlanText += "<p>Monday: Grilled Chicken with Roasted Vegetables</p>";
+                mealPlanText += "<p>Tuesday: Spaghetti Bolognese</p>";
+                mealPlanText += "<p>Wednesday: Grilled Salmon with Quinoa</p>";
+            }
+
+            if (glutenFree) {
+                mealPlanText += "<p>Thursday: Gluten-Free Pizza</p>";
+            } else {
+                mealPlanText += "<p>Thursday: Spaghetti with Garlic Bread</p>";
+            }
+
+            if (lowCarb) {
+                mealPlanText += "<p>Friday: Cauliflower Fried Rice</p>";
+            } else {
+                mealPlanText += "<p>Friday: Baked Potato with Sour Cream</p>";
+            }
+
+            if (nutFree) {
+                mealPlanText += "<p>Saturday: Chicken Caesar Salad</p>";
+            } else {
+                mealPlanText += "<p>Saturday: Walnut Pesto Pasta</p>";
+            }
+
+            mealPlanText += "<p>Sunday: Grilled Veggie Wrap</p>";
+
+            // Display the meal plan
+            document.getElementById('mealPlan').innerHTML = mealPlanText;
         }
     </script>
 </body>
+</html>
+
 </html>
