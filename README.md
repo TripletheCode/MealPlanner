@@ -1,159 +1,164 @@
-
+<!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Meal Planner</title>
-    <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #333;
-            color: #fff;
-        }
-
-        h1 {
-            text-align: center;
-            padding: 20px 0;
-            color: #4caf50;
-        }
-
-        form {
-            max-width: 600px;
-            margin: 20px auto;
-            padding: 20px;
-            border: 1px solid #555;
-            border-radius: 10px;
-            background-color: #444;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-        }
-
-        label {
-            display: block;
-            margin-bottom: 10px;
-            color: #ccc;
-        }
-
-        input[type="checkbox"] {
-            margin-right: 5px;
-        }
-
-        button {
-            display: inline-block;
-            width: 48%;
-            padding: 10px;
-            margin-top: 10px;
-            background-color: #4caf50;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        #clearBtn {
-            background-color: #f44336;
-            margin-right: 2%;
-        }
-
-        #generateBtn {
-            background-color: #4caf50;
-        }
-
-        #mealPlan {
-            margin-top: 20px;
-            background-color: #444;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-        }
-
-        #mealPlan h2 {
-            color: #4caf50;
-        }
-
-        #mealPlan p {
-            margin-bottom: 10px;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Meal Planner</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      text-align: center;
+      margin: 20px;
+    }
+    h1 {
+      color: #333;
+    }
+    section {
+      margin-bottom: 20px;
+    }
+  </style>
 </head>
 <body>
-    <h1>Weekly Meal Planner</h1>
-    <form id="mealForm">
-        <label for="vegetarian">Vegetarian</label>
-        <input type="checkbox" id="vegetarian" name="vegetarian">
+  <h1>Weekly Meal Planner</h1>
 
-        <label for="glutenFree">Gluten-Free</label>
-        <input type="checkbox" id="glutenFree" name="glutenFree">
+  <!-- Form to input meal details -->
+  <form id="mealForm">
+    <label for="day">Select a day:</label>
+    <select id="day" name="day">
+      <option value="Monday">Monday</option>
+      <option value="Tuesday">Tuesday</option>
+      <option value="Wednesday">Wednesday</option>
+      <option value="Thursday">Thursday</option>
+      <option value="Friday">Friday</option>
+      <option value="Saturday">Saturday</option>
+      <option value="Sunday">Sunday</option>
+    </select>
+    <br>
 
-        <label for="lowCarb">Low Carb</label>
-        <input type="checkbox" id="lowCarb" name="lowCarb">
+    <label for="mealType">Select a meal type:</label>
+    <select id="mealType" name="mealType">
+      <option value="Breakfast">Breakfast</option>
+      <option value="Lunch">Lunch</option>
+      <option value="Dinner">Dinner</option>
+    </select>
+    <br>
 
-        <label for="nutFree">Nut-Free</label>
-        <input type="checkbox" id="nutFree" name="nutFree">
+    <label for="meal">Enter meal details:</label>
+    <input type="text" id="meal" name="meal" required>
+    <br>
 
-        <button id="clearBtn" type="button" onclick="clearSelection()">Clear Selection</button>
-        <button id="generateBtn" type="button" onclick="generateMealPlan()">Generate Meal Plan</button>
-    </form>
+    <button type="button" onclick="addMeal()">Add Meal</button>
+  </form>
 
-    <div id="mealPlan"></div>
+  <!-- Display meal plan with stored and user input meals -->
+  <section id="mealPlan">
+    <h2>Meal Plan</h2>
+    <ul id="planList"></ul>
+  </section>
 
-    <script>
-        function clearSelection() {
-            // Clear all checkbox selections
-            document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
-                checkbox.checked = false;
-            });
+  <script>
+    // Predefined list of meals
+    const predefinedMeals = [
+      "Oatmeal",
+      "Sandwich",
+      "Grilled Chicken",
+      "Pasta",
+      "Salad",
+      // Add more meals as needed
+    ];
 
-            // Clear the meal plan display
-            document.getElementById('mealPlan').innerHTML = "";
-        }
+    // Function to add a meal to the list
+    function addMeal() {
+      // Get user input values
+      const day = document.getElementById("day").value;
+      const mealType = document.getElementById("mealType").value;
+      const meal = document.getElementById("meal").value;
 
-        function generateMealPlan() {
-            // Get user preferences
-            const vegetarian = document.getElementById('vegetarian').checked;
-            const glutenFree = document.getElementById('glutenFree').checked;
-            const lowCarb = document.getElementById('lowCarb').checked;
-            const nutFree = document.getElementById('nutFree').checked;
+      // Create a new list item
+      const listItem = document.createElement("li");
+      listItem.textContent = `${day} - ${mealType}: ${meal}`;
 
-            // Sample meal plan (replace with actual logic or API call)
-            let mealPlanText = "<h2>Your Meal Plan for the Week:</h2>";
+      // Append the new item to the list
+      document.getElementById("planList").appendChild(listItem);
 
-            if (vegetarian) {
-                mealPlanText += "<p>Monday: Quinoa Salad</p>";
-                mealPlanText += "<p>Tuesday: Lentil Soup</p>";
-                mealPlanText += "<p>Wednesday: Veggie Stir-Fry</p>";
-            } else {
-                mealPlanText += "<p>Monday: Grilled Chicken with Roasted Vegetables</p>";
-                mealPlanText += "<p>Tuesday: Spaghetti Bolognese</p>";
-                mealPlanText += "<p>Wednesday: Grilled Salmon with Quinoa</p>";
-            }
+      // Clear the form fields
+      document.getElementById("mealForm").reset();
 
-            if (glutenFree) {
-                mealPlanText += "<p>Thursday: Gluten-Free Pizza</p>";
-            } else {
-                mealPlanText += "<p>Thursday: Spaghetti with Garlic Bread</p>";
-            }
+      // Save the meal to localStorage
+      saveMeal(day, mealType, meal);
+    }
 
-            if (lowCarb) {
-                mealPlanText += "<p>Friday: Cauliflower Fried Rice</p>";
-            } else {
-                mealPlanText += "<p>Friday: Baked Potato with Sour Cream</p>";
-            }
+    // Function to save a meal to localStorage
+    function saveMeal(day, mealType, meal) {
+      // Check if localStorage is supported
+      if (typeof(Storage) !== "undefined") {
+        // Retrieve existing meals or initialize an empty array
+        const savedMeals = JSON.parse(localStorage.getItem("meals")) || [];
 
-            if (nutFree) {
-                mealPlanText += "<p>Saturday: Chicken Caesar Salad</p>";
-            } else {
-                mealPlanText += "<p>Saturday: Walnut Pesto Pasta</p>";
-            }
+        // Add the new meal to the array
+        savedMeals.push(`${day} - ${mealType}: ${meal}`);
 
-            mealPlanText += "<p>Sunday: Grilled Veggie Wrap</p>";
+        // Save the updated array to localStorage
+        localStorage.setItem("meals", JSON.stringify(savedMeals));
+      } else {
+        // Fallback for browsers that do not support localStorage
+        console.error("LocalStorage is not supported in this browser.");
+      }
+    }
 
-            // Display the meal plan
-            document.getElementById('mealPlan').innerHTML = mealPlanText;
-        }
-    </script>
+    // Function to load stored meals from localStorage
+    function loadMeals() {
+      // Check if localStorage is supported
+      if (typeof(Storage) !== "undefined") {
+        // Retrieve stored meals
+        const savedMeals = JSON.parse(localStorage.getItem("meals")) || [];
+
+        // Display stored meals on the webpage
+        const planList = document.getElementById("planList");
+        savedMeals.forEach(meal => {
+          const listItem = document.createElement("li");
+          listItem.textContent = meal;
+          planList.appendChild(listItem);
+        });
+      } else {
+        // Fallback for browsers that do not support localStorage
+        console.error("LocalStorage is not supported in this browser.");
+      }
+    }
+
+    // Function to add a randomly generated meal to the list
+    function addRandomMeal() {
+      // Get a random meal from the predefined list
+      const randomMeal = getRandomItem(predefinedMeals);
+
+      // Get a random day from the days of the week
+      const daysOfWeek = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+      const randomDay = getRandomItem(daysOfWeek);
+
+      // Get a random meal type
+      const mealTypes = ["Breakfast", "Lunch", "Dinner"];
+      const randomMealType = getRandomItem(mealTypes);
+
+      // Create a new list item
+      const listItem = document.createElement("li");
+      listItem.textContent = `${randomDay} - ${randomMealType}: ${randomMeal}`;
+
+      // Append the new item to the list
+      document.getElementById("planList").appendChild(listItem);
+    }
+
+    // Function to get a random item from an array
+    function getRandomItem(array) {
+      const randomIndex = Math.floor(Math.random() * array.length);
+      return array[randomIndex];
+    }
+
+    // Load stored meals when the page is loaded
+    window.onload = function() {
+      loadMeals();
+      // Uncomment the line below to add a random meal on page load
+      // addRandomMeal();
+    };
+  </script>
 </body>
-</html>
-
 </html>
