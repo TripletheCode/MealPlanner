@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -57,6 +58,21 @@
     button:hover {
       background-color: #228b22; /* Forest Green button color on hover */
     }
+    form {
+      margin-top: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    label {
+      margin-bottom: 5px;
+    }
+    input {
+      margin-bottom: 10px;
+      padding: 5px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+    }
   </style>
 </head>
 <body>
@@ -86,6 +102,14 @@
   <section id="shoppingList">
     <h2>Shopping List</h2>
     <ul id="listItems"></ul>
+    <!-- Form to add additional items to the shopping list -->
+    <form id="addItemForm">
+      <label for="itemName">Item Name:</label>
+      <input type="text" id="itemName" required>
+      <label for="itemQuantity">Quantity:</label>
+      <input type="number" id="itemQuantity" required>
+      <button type="button" onclick="addItemToList()">Add to List</button>
+    </form>
   </section>
 
   <!-- Print button for shopping list -->
@@ -188,6 +212,23 @@
 
       // Print the window
       printWindow.print();
+    }
+
+    // Function to add an additional item to the shopping list
+    function addItemToList() {
+      const itemName = document.getElementById("itemName").value;
+      const itemQuantity = parseInt(document.getElementById("itemQuantity").value, 10);
+
+      if (itemName && !isNaN(itemQuantity) && itemQuantity > 0) {
+        const listElement = document.getElementById("listItems");
+        const listItem = document.createElement("li");
+        listItem.textContent = `${itemName} - Quantity: ${itemQuantity}`;
+        listElement.appendChild(listItem);
+
+        // Clear the form fields after adding the item
+        document.getElementById("itemName").value = "";
+        document.getElementById("itemQuantity").value = "";
+      }
     }
 
     // Load the saved background color or set default when the page is loaded
