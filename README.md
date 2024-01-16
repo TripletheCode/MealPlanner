@@ -45,22 +45,18 @@
   <!-- Color picker for background color selection -->
   <label for="colorPicker">Select background color:</label>
   <select id="colorPicker" onchange="changeBackgroundColor()">
-    <option value="lightcoral">Light Coral</option>
-    <option value="lightsalmon">Light Salmon</option>
-    <option value="darkorange">Dark Orange</option>
-    <option value="lightgreen">Light Green</option>
-    <option value="lightblue">Light Blue</option>
-    <option value="lightpink">Light Pink</option>
-    <option value="lightseagreen">Light Sea Green</option>
-    <option value="plum">Plum</option>
-    <option value="lightsteelblue">Light Steel Blue</option>
-    <option value="palevioletred">Pale Violet Red</option>
-    <option value="mediumorchid">Medium Orchid</option>
-    <option value="thistle">Thistle</option>
-    <option value="darkslategray">Dark Slate Gray</option>
-    <option value="cadetblue">Cadet Blue</option>
-    <option value="burlywood">Burly Wood</option>
-    <option value="lightgoldenrodyellow">Light Goldenrod Yellow</option>
+    <option value="#a52a2a">Brown</option>
+    <option value="#8b4513">Saddle Brown</option>
+    <option value="#2f4f4f">Dark Slate Gray</option>
+    <option value="#556b2f">Dark Olive Green</option>
+    <option value="#483d8b">Dark Slate Blue</option>
+    <option value="#006400">Dark Green</option>
+    <option value="#8b0000">Dark Red</option>
+    <option value="#8b008b">Dark Magenta</option>
+    <option value="#87ceeb">Sky Blue</option>
+    <option value="#f08080">Light Coral</option>
+    <option value="#dda0dd">Plum</option>
+    <option value="#7fffd4">Aquamarine</option>
   </select>
 
   <!-- Display meal plan and shopping list -->
@@ -84,9 +80,30 @@
       "Oatmeal": ["Oats", "Milk", "Fruits"],
       "Sandwich": ["Bread", "Cheese", "Tomato", "Lettuce", "Turkey"],
       "Grilled Chicken": ["Chicken Breast", "Olive Oil", "Herbs", "Vegetables"],
-      "Pasta": ["Pasta", "Tomato Sauce", "Ground Beef", "Parmesan Cheese"],
+      "Pasta": ["Pasta", "Tomato Sauce", "Ground Beef", "Parmesan Cheese", "Roma Tomatoes"],
       "Salad": ["Lettuce", "Tomato", "Cucumber", "Dressing"],
-      // Add more meals as needed
+      "Smoothie": ["Banana", "Yogurt", "Berries", "Honey"],
+      "Stir Fry": ["Tofu", "Broccoli", "Soy Sauce", "Rice"],
+      "Burrito": ["Tortilla", "Black Beans", "Rice", "Salsa", "Avocado"],
+      "Pizza": ["Dough", "Tomato Sauce", "Cheese", "Pepperoni"],
+      "Sushi": ["Rice", "Nori", "Fish", "Soy Sauce", "Wasabi", "Ginger"],
+      "Chicken Caesar Wrap": ["Chicken Breast", "Lettuce", "Parmesan Cheese", "Caesar Dressing"],
+      "Vegetable Curry": ["Curry Sauce", "Vegetables", "Rice"],
+      "Fajitas": ["Chicken Strips", "Bell Peppers", "Onions", "Tortillas"],
+      "Greek Salad": ["Cucumber", "Tomato", "Olives", "Feta Cheese"],
+      "Quinoa Bowl": ["Quinoa", "Black Beans", "Corn", "Avocado"],
+      "BBQ Ribs": ["Pork Ribs", "BBQ Sauce", "Coleslaw"],
+      "Taco": ["Tortillas", "Ground Beef", "Lettuce", "Cheese", "Salsa", "Roma Tomatoes"],
+      "Pesto Pasta": ["Pasta", "Pesto Sauce", "Cherry Tomatoes", "Parmesan Cheese"],
+      "Chicken Alfredo": ["Fettuccine", "Chicken Breast", "Alfredo Sauce", "Broccoli"],
+      "Caprese Salad": ["Tomato", "Mozzarella", "Basil", "Balsamic Glaze"],
+      "Shrimp Stir Fry": ["Shrimp", "Vegetables", "Soy Sauce", "Rice"],
+      "Nachos": ["Tortilla Chips", "Cheese", "Ground Beef", "Salsa", "Guacamole"],
+      "Chicken Teriyaki": ["Chicken Thighs", "Teriyaki Sauce", "Broccoli", "Rice"],
+      "Vegetarian Burrito": ["Tortilla", "Black Beans", "Rice", "Salsa", "Guacamole"],
+      "Beef and Broccoli": ["Beef Strips", "Broccoli", "Soy Sauce", "Rice"],
+      "Caesar Salad": ["Lettuce", "Croutons", "Parmesan Cheese", "Caesar Dressing"],
+      "Mango Salsa Chicken": ["Chicken Breast", "Mango", "Red Onion", "Cilantro"],
     };
 
     // Function to generate a meal plan and shopping list for the week
@@ -119,15 +136,10 @@
       displayShoppingList("listItems", shoppingList);
     }
 
-    // Function to display a list in the specified HTML element
-    function displayList(elementId, items) {
-      const listElement = document.getElementById(elementId);
-      listElement.innerHTML = "";
-      items.forEach(item => {
-        const listItem = document.createElement("li");
-        listItem.textContent = item;
-        listElement.appendChild(listItem);
-      });
+    // Function to get a random item from an array
+    function getRandomItem(array) {
+      const randomIndex = Math.floor(Math.random() * array.length);
+      return array[randomIndex];
     }
 
     // Function to display the shopping list with quantities
@@ -142,10 +154,15 @@
       });
     }
 
-    // Function to get a random item from an array
-    function getRandomItem(array) {
-      const randomIndex = Math.floor(Math.random() * array.length);
-      return array[randomIndex];
+    // Function to display a list in the specified HTML element
+    function displayList(elementId, items) {
+      const listElement = document.getElementById(elementId);
+      listElement.innerHTML = "";
+      items.forEach(item => {
+        const listItem = document.createElement("li");
+        listItem.textContent = item;
+        listElement.appendChild(listItem);
+      });
     }
 
     // Function to change the background color
@@ -186,7 +203,4 @@
     };
   </script>
 </body>
-</html>
 
-</html>
-  
