@@ -1,3 +1,4 @@
+
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -40,9 +41,18 @@
       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
       transition: background-color 0.3s;
       color: #000; /* Dark black text color */
+      position: relative;
     }
     li:hover {
       background-color: #f0f0f0; /* Light gray background on hover */
+    }
+    .remove-button {
+      position: absolute;
+      top: 5px;
+      right: 5px;
+      cursor: pointer;
+      font-weight: bold;
+      color: #ff0000; /* Red color for the remove button */
     }
     button {
       padding: 10px;
@@ -77,6 +87,7 @@
   </style>
 </head>
 <body>
+  <h1>Weekly Meal Planner</h1>
 
   <!-- Color picker for background color selection -->
   <label for="colorPicker">Select background color:</label>
@@ -101,7 +112,7 @@
   <!-- Display shopping list -->
   <section id="shoppingList">
     <h2>Shopping List</h2>
-    <ul id="listItems" onclick="removeItem(event)"></ul>
+    <ul id="listItems"></ul>
     <!-- Form to add and remove items from the shopping list -->
     <form id="listForm">
       <label for="itemName">Item Name:</label>
@@ -109,7 +120,6 @@
       <label for="itemQuantity">Quantity:</label>
       <input type="number" id="itemQuantity" required>
       <button type="button" onclick="addItemToList()">Add to List</button>
-      <button type="button" onclick="removeSelectedItem()">Remove Selected Item</button>
     </form>
   </section>
 
@@ -188,7 +198,27 @@
         const listItem = document.createElement("li");
         listItem.textContent = `${ingredient} - Quantity: ${quantity}`;
         listElement.appendChild(listItem);
+
+        // Add a remove button next to each shopping list item
+        const removeButton = document.createElement("span");
+        removeButton.textContent = " x";
+        removeButton.className = "remove-button";
+        removeButton.onclick = function() { removeItemFromList(ingredient); };
+        listItem.appendChild(removeButton);
       });
+    }
+
+    // Function to remove the selected item from the shopping list
+    function removeItemFromList(ingredient) {
+      const listElement = document.getElementById("listItems");
+      const items = listElement.getElementsByTagName("li");
+
+      for (let i = 0; i < items.length; i++) {
+        if (items[i].textContent.startsWith(ingredient)) {
+          listElement.removeChild(items[i]);
+          break;
+        }
+      }
     }
 
     // Function to change the background color
@@ -224,35 +254,19 @@
         const listElement = document.getElementById("listItems");
         const listItem = document.createElement("li");
         listItem.textContent = `${itemName} - Quantity: ${itemQuantity}`;
+
+        // Add a remove button next to the new shopping list item
+        const removeButton = document.createElement("span");
+        removeButton.textContent = " x";
+        removeButton.className = "remove-button";
+        removeButton.onclick = function() { removeItemFromList(itemName); };
+        listItem.appendChild(removeButton);
+
         listElement.appendChild(listItem);
 
         // Clear the form fields after adding the item
         document.getElementById("itemName").value = "";
         document.getElementById("itemQuantity").value = "";
-      }
-    }
-
-    // Function to remove the selected item from the shopping list
-    function removeSelectedItem() {
-      const listElement = document.getElementById("listItems");
-      const selectedItems = listElement.querySelectorAll(".selected");
-
-      selectedItems.forEach(item => {
-        listElement.removeChild(item);
-      });
-    }
-
-    // Function to handle item selection and removal
-    function removeItem(event) {
-      const selectedItems = document.querySelectorAll("#listItems .selected");
-
-      selectedItems.forEach(item => {
-        item.classList.remove("selected");
-      });
-
-      const clickedItem = event.target;
-      if (clickedItem.tagName === "LI") {
-        clickedItem.classList.toggle("selected");
       }
     }
 
@@ -271,3 +285,4 @@
   </script>
 </body>
 </html>
+
