@@ -214,20 +214,21 @@
     }
 
     // Function to display the shopping list
-    function displayShoppingList(listId, shoppingList) {
-      const listContainer = document.getElementById(listId);
-      listContainer.innerHTML = ""; // Clear previous list items
+function displayShoppingList(listId, shoppingList) {
+  const listContainer = document.getElementById(listId);
+  listContainer.innerHTML = ""; // Clear previous list items
 
-      for (const item in shoppingList) {
-        const listItem = document.createElement("li");
-        listItem.textContent = `${item} x${shoppingList[item]}`;
-        listItem.classList.add("remove-button");
-        listItem.onclick = function() {
-          this.parentNode.removeChild(this);
-        };
-        listContainer.appendChild(listItem);
-      }
-    }
+  for (const item in shoppingList) {
+    const listItem = document.createElement("li");
+    listItem.textContent = `${item} x${shoppingList[item]}`;
+    listItem.classList.add("remove-button");
+    listItem.onclick = function() {
+      this.parentNode.removeChild(this);
+    };
+    listContainer.appendChild(listItem);
+  }
+  listContainer.style.textAlign = "left"; // Ensure the list is left-aligned
+}
 
     // Function to print a list
     function printList(title, listId) {
