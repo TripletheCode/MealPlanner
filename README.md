@@ -2,17 +2,17 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Meal Planner with Background Color</title>
+  <title>Weekly Meal Planner</title>
   <style>
     body {
       font-family: 'Arial', sans-serif;
       text-align: center;
       margin: 20px;
-      background-color: #f0f0f0; /* Set a default background color */
-      transition: background-color 0.5s;
+      background-color: #f4f4f4; /* Light gray background */
+      color: #333;
     }
     h1 {
-      color: #333;
+      color: #2e8b57; /* Sea Green header color */
     }
     #calendar {
       display: grid;
@@ -26,19 +26,32 @@
     ul {
       list-style-type: none;
       padding: 0;
+      margin: 0;
     }
     li {
-      margin: 8px 0;
+      margin: 10px 0;
+      padding: 10px;
+      background-color: #fff; /* White background for list items */
+      border-radius: 5px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      transition: background-color 0.3s;
+    }
+    li:hover {
+      background-color: #f0f0f0; /* Light gray background on hover */
     }
     button {
       padding: 10px;
       margin: 10px;
       font-size: 16px;
       cursor: pointer;
-      background-color: #4CAF50;
+      background-color: #2e8b57; /* Sea Green button color */
       color: white;
       border: none;
       border-radius: 5px;
+      transition: background-color 0.3s;
+    }
+    button:hover {
+      background-color: #228b22; /* Forest Green button color on hover */
     }
   </style>
 </head>
@@ -155,7 +168,9 @@
       daysOfWeek.forEach(day => {
         const cell = document.createElement("div");
         cell.textContent = day;
-        cell.style.backgroundColor = "white"; // Set white background for days
+        cell.style.backgroundColor = "#87ceeb"; // Light blue background for days
+        cell.style.padding = "10px";
+        cell.style.borderRadius = "5px";
 
         // Display the meal under the day
         const mealForDay = mealPlan.find(item => item.includes(day));
@@ -232,4 +247,3 @@
   </script>
 </body>
 </html>
-
