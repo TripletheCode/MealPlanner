@@ -43,6 +43,7 @@
   </style>
 </head>
 <body>
+  <h1>Weekly Meal Planner</h1>
 
   <!-- Color picker for background color selection -->
   <label for="colorPicker">Select background color:</label>
@@ -92,7 +93,7 @@
       // ... (rest of the predefined meals)
     };
 
-    // Function to generate a meal plan and shopping list for the week
+    // Function to generate a non-repeating meal plan and shopping list for the week
     function generateMealPlan() {
       // Get the days of the week
       const daysOfWeek = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
@@ -101,19 +102,32 @@
       const mealPlan = [];
       const shoppingList = {};
 
-      // Loop through each day and add a randomly selected meal
+      // Copy the predefined meals to avoid modification
+      const availableMeals = { ...predefinedMeals };
+
+      // Loop through each day and add a randomly selected meal without repeats
       daysOfWeek.forEach(day => {
-        const randomMeal = getRandomItem(Object.keys(predefinedMeals));
-        const ingredients = predefinedMeals[randomMeal];
+        const availableMealNames = Object.keys(availableMeals);
+        
+        if (availableMealNames.length === 0) {
+          // If all meals have been used, break out of the loop
+          return;
+        }
+
+        const randomMealName = getRandomItem(availableMealNames);
+        const ingredients = availableMeals[randomMealName];
 
         // Add the meal to the meal plan
-        mealPlan.push(`${day}: ${randomMeal}`);
+        mealPlan.push(`${day}: ${randomMealName}`);
         mealPlan.push(`${ingredients.join(', ')}`); // Display ingredients under the day
 
         // Update the shopping list with quantities (number of times ingredient appears)
         ingredients.forEach(ingredient => {
           shoppingList[ingredient] = (shoppingList[ingredient] || 0) + 1;
         });
+
+        // Remove the used meal from the available meals
+        delete availableMeals[randomMealName];
       });
 
       // Display the meal plan
