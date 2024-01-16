@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Meal Planner with Background Color</title>
+  <title>Weekly Meal Planner</title>
   <style>
     body {
       font-family: 'Arial', sans-serif;
@@ -15,14 +15,15 @@
     h1 {
       color: #2e8b57; /* Sea Green header color */
     }
+    #colorPicker {
+      margin-top: 20px;
+    }
     #calendar {
       display: grid;
       grid-template-columns: repeat(7, 1fr);
       grid-gap: 10px;
-      margin-bottom: 20px;
-    }
-    #colorPicker {
       margin-top: 20px;
+      margin-bottom: 20px;
     }
     ul {
       list-style-type: none;
@@ -104,7 +105,7 @@
     // Function to generate a non-repeating meal plan and shopping list for the week
     function generateMealPlan() {
       // Get the days of the week
-      const daysOfWeek = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+      const daysOfWeek = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 
       // Initialize shopping list array
       const shoppingList = {};
@@ -200,5 +201,3 @@
       setTimeout(generateMealPlan, 100);
     };
   </script>
-</body>
-</html>
