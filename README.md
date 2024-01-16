@@ -14,7 +14,10 @@
     h1 {
       color: #333;
     }
-    section {
+    #calendar {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      grid-gap: 10px;
       margin-bottom: 20px;
     }
     #colorPicker {
@@ -40,7 +43,6 @@
   </style>
 </head>
 <body>
-  <h1>Weekly Meal Planner</h1>
 
   <!-- Color picker for background color selection -->
   <label for="colorPicker">Select background color:</label>
@@ -58,6 +60,9 @@
     <option value="#dda0dd">Plum</option>
     <option value="#7fffd4">Aquamarine</option>
   </select>
+
+  <!-- Display calendar-style layout for the meal plan -->
+  <div id="calendar"></div>
 
   <!-- Display meal plan and shopping list -->
   <section id="mealPlan">
@@ -77,7 +82,7 @@
   <script>
     // Predefined list of meals with ingredients
     const predefinedMeals = {
-      "Oatmeal": ["Oats", "Milk", "Fruits"],
+     "Oatmeal": ["Oats", "Milk", "Fruits"],
       "Sandwich": ["Bread", "Cheese", "Tomato", "Lettuce", "Turkey"],
       "Grilled Chicken": ["Chicken Breast", "Olive Oil", "Herbs", "Vegetables"],
       "Pasta": ["Pasta", "Tomato Sauce", "Ground Beef", "Parmesan Cheese", "Roma Tomatoes"],
@@ -103,7 +108,7 @@
       "Vegetarian Burrito": ["Tortilla", "Black Beans", "Rice", "Salsa", "Guacamole"],
       "Beef and Broccoli": ["Beef Strips", "Broccoli", "Soy Sauce", "Rice"],
       "Caesar Salad": ["Lettuce", "Croutons", "Parmesan Cheese", "Caesar Dressing"],
-      "Mango Salsa Chicken": ["Chicken Breast", "Mango", "Red Onion", "Cilantro"],
+      "Mango Salsa Chicken": ["Chicken Breast", "Mango", "Red Onion", "Cilantro"]
     };
 
     // Function to generate a meal plan and shopping list for the week
@@ -134,12 +139,35 @@
 
       // Display the shopping list
       displayShoppingList("listItems", shoppingList);
+
+      // Display the calendar-style layout
+      displayCalendar("calendar", daysOfWeek, mealPlan);
     }
 
     // Function to get a random item from an array
     function getRandomItem(array) {
       const randomIndex = Math.floor(Math.random() * array.length);
       return array[randomIndex];
+    }
+
+    // Function to display the calendar-style layout
+    function displayCalendar(elementId, daysOfWeek, mealPlan) {
+      const calendarElement = document.getElementById(elementId);
+      calendarElement.innerHTML = "";
+
+      // Create calendar cells for each day
+      daysOfWeek.forEach(day => {
+        const cell = document.createElement("div");
+        cell.textContent = day;
+
+        // Highlight the cell if the meal plan has a meal for that day
+        if (mealPlan.some(item => item.includes(day))) {
+          cell.style.backgroundColor = "#4CAF50"; // Green color for highlighting
+          cell.style.color = "white";
+        }
+
+        calendarElement.appendChild(cell);
+      });
     }
 
     // Function to display the shopping list with quantities
@@ -203,4 +231,4 @@
     };
   </script>
 </body>
-
+</html>
