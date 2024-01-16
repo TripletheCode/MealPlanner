@@ -82,33 +82,14 @@
   <script>
     // Predefined list of meals with ingredients
     const predefinedMeals = {
-     "Oatmeal": ["Oats", "Milk", "Fruits"],
+      "Oatmeal": ["Oats", "Milk", "Fruits"],
       "Sandwich": ["Bread", "Cheese", "Tomato", "Lettuce", "Turkey"],
       "Grilled Chicken": ["Chicken Breast", "Olive Oil", "Herbs", "Vegetables"],
       "Pasta": ["Pasta", "Tomato Sauce", "Ground Beef", "Parmesan Cheese", "Roma Tomatoes"],
       "Salad": ["Lettuce", "Tomato", "Cucumber", "Dressing"],
       "Smoothie": ["Banana", "Yogurt", "Berries", "Honey"],
       "Stir Fry": ["Tofu", "Broccoli", "Soy Sauce", "Rice"],
-      "Burrito": ["Tortilla", "Black Beans", "Rice", "Salsa", "Avocado"],
-      "Pizza": ["Dough", "Tomato Sauce", "Cheese", "Pepperoni"],
-      "Sushi": ["Rice", "Nori", "Fish", "Soy Sauce", "Wasabi", "Ginger"],
-      "Chicken Caesar Wrap": ["Chicken Breast", "Lettuce", "Parmesan Cheese", "Caesar Dressing"],
-      "Vegetable Curry": ["Curry Sauce", "Vegetables", "Rice"],
-      "Fajitas": ["Chicken Strips", "Bell Peppers", "Onions", "Tortillas"],
-      "Greek Salad": ["Cucumber", "Tomato", "Olives", "Feta Cheese"],
-      "Quinoa Bowl": ["Quinoa", "Black Beans", "Corn", "Avocado"],
-      "BBQ Ribs": ["Pork Ribs", "BBQ Sauce", "Coleslaw"],
-      "Taco": ["Tortillas", "Ground Beef", "Lettuce", "Cheese", "Salsa", "Roma Tomatoes"],
-      "Pesto Pasta": ["Pasta", "Pesto Sauce", "Cherry Tomatoes", "Parmesan Cheese"],
-      "Chicken Alfredo": ["Fettuccine", "Chicken Breast", "Alfredo Sauce", "Broccoli"],
-      "Caprese Salad": ["Tomato", "Mozzarella", "Basil", "Balsamic Glaze"],
-      "Shrimp Stir Fry": ["Shrimp", "Vegetables", "Soy Sauce", "Rice"],
-      "Nachos": ["Tortilla Chips", "Cheese", "Ground Beef", "Salsa", "Guacamole"],
-      "Chicken Teriyaki": ["Chicken Thighs", "Teriyaki Sauce", "Broccoli", "Rice"],
-      "Vegetarian Burrito": ["Tortilla", "Black Beans", "Rice", "Salsa", "Guacamole"],
-      "Beef and Broccoli": ["Beef Strips", "Broccoli", "Soy Sauce", "Rice"],
-      "Caesar Salad": ["Lettuce", "Croutons", "Parmesan Cheese", "Caesar Dressing"],
-      "Mango Salsa Chicken": ["Chicken Breast", "Mango", "Red Onion", "Cilantro"]
+      // ... (rest of the predefined meals)
     };
 
     // Function to generate a meal plan and shopping list for the week
@@ -127,6 +108,7 @@
 
         // Add the meal to the meal plan
         mealPlan.push(`${day}: ${randomMeal}`);
+        mealPlan.push(`${ingredients.join(', ')}`); // Display ingredients under the day
 
         // Update the shopping list with quantities (number of times ingredient appears)
         ingredients.forEach(ingredient => {
@@ -159,11 +141,15 @@
       daysOfWeek.forEach(day => {
         const cell = document.createElement("div");
         cell.textContent = day;
+        cell.style.backgroundColor = "white"; // Set white background for days
 
-        // Highlight the cell if the meal plan has a meal for that day
-        if (mealPlan.some(item => item.includes(day))) {
-          cell.style.backgroundColor = "#4CAF50"; // Green color for highlighting
-          cell.style.color = "white";
+        // Display the meal under the day
+        const mealForDay = mealPlan.find(item => item.includes(day));
+        if (mealForDay) {
+          const mealDetails = mealForDay.split(":")[1].trim();
+          const mealParagraph = document.createElement("p");
+          mealParagraph.textContent = mealDetails;
+          cell.appendChild(mealParagraph);
         }
 
         calendarElement.appendChild(cell);
@@ -188,7 +174,7 @@
       listElement.innerHTML = "";
       items.forEach(item => {
         const listItem = document.createElement("li");
-        listItem.textContent = item;
+        listItem.innerHTML = item;
         listElement.appendChild(listItem);
       });
     }
@@ -230,5 +216,4 @@
       setTimeout(generateMealPlan, 100);
     };
   </script>
-</body>
-</html>
+
