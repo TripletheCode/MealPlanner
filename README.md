@@ -9,7 +9,7 @@
       text-align: center;
       margin: 20px;
       background-color: #f4f4f4; /* Light gray background */
-      color: #333;
+      color: #000; /* Dark black text color */
     }
     h1 {
       color: #2e8b57; /* Sea Green header color */
@@ -39,7 +39,7 @@
       border-radius: 5px;
       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
       transition: background-color 0.3s;
-      color: #333; /* Dark text color */
+      color: #000; /* Dark black text color */
     }
     li:hover {
       background-color: #f0f0f0; /* Light gray background on hover */
@@ -77,6 +77,7 @@
   </style>
 </head>
 <body>
+  <h1>Weekly Meal Planner</h1>
 
   <!-- Color picker for background color selection -->
   <label for="colorPicker">Select background color:</label>
