@@ -2,7 +2,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Weekly Meal Planner</title>
+  <title>Meal Planner with Background Color</title>
   <style>
     body {
       font-family: 'Arial', sans-serif;
@@ -78,19 +78,13 @@
   <!-- Display calendar-style layout for the meal plan -->
   <div id="calendar"></div>
 
-  <!-- Display meal plan and shopping list -->
-  <section id="mealPlan">
-    <h2>Meal Plan for the Week</h2>
-    <ul id="planList"></ul>
-  </section>
-
+  <!-- Display shopping list -->
   <section id="shoppingList">
     <h2>Shopping List</h2>
     <ul id="listItems"></ul>
   </section>
 
-  <!-- Print buttons for meal plan and shopping list -->
-  <button onclick="printList('Meal Plan', 'planList')">Print Meal Plan</button>
+  <!-- Print button for shopping list -->
   <button onclick="printList('Shopping List', 'listItems')">Print Shopping List</button>
 
   <script>
@@ -111,8 +105,7 @@
       // Get the days of the week
       const daysOfWeek = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
 
-      // Initialize meal plan and shopping list arrays
-      const mealPlan = [];
+      // Initialize shopping list array
       const shoppingList = {};
 
       // Copy the predefined meals to avoid modification
@@ -130,10 +123,6 @@
         const randomMealName = getRandomItem(availableMealNames);
         const ingredients = availableMeals[randomMealName];
 
-        // Add the meal to the meal plan
-        mealPlan.push(`${day}: ${randomMealName}`);
-        mealPlan.push(`${ingredients.join(', ')}`); // Display ingredients under the day
-
         // Update the shopping list with quantities (number of times ingredient appears)
         ingredients.forEach(ingredient => {
           shoppingList[ingredient] = (shoppingList[ingredient] || 0) + 1;
@@ -143,14 +132,11 @@
         delete availableMeals[randomMealName];
       });
 
-      // Display the meal plan
-      displayList("planList", mealPlan);
-
       // Display the shopping list
       displayShoppingList("listItems", shoppingList);
 
       // Display the calendar-style layout
-      displayCalendar("calendar", daysOfWeek, mealPlan);
+      displayCalendar("calendar", daysOfWeek);
     }
 
     // Function to get a random item from an array
@@ -160,7 +146,7 @@
     }
 
     // Function to display the calendar-style layout
-    function displayCalendar(elementId, daysOfWeek, mealPlan) {
+    function displayCalendar(elementId, daysOfWeek) {
       const calendarElement = document.getElementById(elementId);
       calendarElement.innerHTML = "";
 
@@ -171,15 +157,6 @@
         cell.style.backgroundColor = "#87ceeb"; // Light blue background for days
         cell.style.padding = "10px";
         cell.style.borderRadius = "5px";
-
-        // Display the meal under the day
-        const mealForDay = mealPlan.find(item => item.includes(day));
-        if (mealForDay) {
-          const mealDetails = mealForDay.split(":")[1].trim();
-          const mealParagraph = document.createElement("p");
-          mealParagraph.textContent = mealDetails;
-          cell.appendChild(mealParagraph);
-        }
 
         calendarElement.appendChild(cell);
       });
@@ -193,17 +170,6 @@
       Object.entries(shoppingList).forEach(([ingredient, quantity]) => {
         const listItem = document.createElement("li");
         listItem.textContent = `${ingredient} - Quantity: ${quantity}`;
-        listElement.appendChild(listItem);
-      });
-    }
-
-    // Function to display a list in the specified HTML element
-    function displayList(elementId, items) {
-      const listElement = document.getElementById(elementId);
-      listElement.innerHTML = "";
-      items.forEach(item => {
-        const listItem = document.createElement("li");
-        listItem.innerHTML = item;
         listElement.appendChild(listItem);
       });
     }
@@ -245,5 +211,3 @@
       setTimeout(generateMealPlan, 100);
     };
   </script>
-</body>
-</html>
