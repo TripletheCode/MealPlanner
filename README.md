@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -123,6 +124,14 @@
         const randomMealName = getRandomItem(availableMealNames);
         const ingredients = availableMeals[randomMealName];
 
+        // Add the meal to the calendar
+        const cell = document.createElement("div");
+        cell.textContent = `${day}: ${randomMealName}`;
+        cell.style.backgroundColor = "#87ceeb"; // Light blue background for days
+        cell.style.padding = "10px";
+        cell.style.borderRadius = "5px";
+        document.getElementById("calendar").appendChild(cell);
+
         // Update the shopping list with quantities (number of times ingredient appears)
         ingredients.forEach(ingredient => {
           shoppingList[ingredient] = (shoppingList[ingredient] || 0) + 1;
@@ -134,32 +143,12 @@
 
       // Display the shopping list
       displayShoppingList("listItems", shoppingList);
-
-      // Display the calendar-style layout
-      displayCalendar("calendar", daysOfWeek);
     }
 
     // Function to get a random item from an array
     function getRandomItem(array) {
       const randomIndex = Math.floor(Math.random() * array.length);
       return array[randomIndex];
-    }
-
-    // Function to display the calendar-style layout
-    function displayCalendar(elementId, daysOfWeek) {
-      const calendarElement = document.getElementById(elementId);
-      calendarElement.innerHTML = "";
-
-      // Create calendar cells for each day
-      daysOfWeek.forEach(day => {
-        const cell = document.createElement("div");
-        cell.textContent = day;
-        cell.style.backgroundColor = "#87ceeb"; // Light blue background for days
-        cell.style.padding = "10px";
-        cell.style.borderRadius = "5px";
-
-        calendarElement.appendChild(cell);
-      });
     }
 
     // Function to display the shopping list with quantities
@@ -211,3 +200,5 @@
       setTimeout(generateMealPlan, 100);
     };
   </script>
+</body>
+</html>
