@@ -1,3 +1,4 @@
+
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -78,7 +79,7 @@
 
       // Initialize meal plan and shopping list arrays
       const mealPlan = [];
-      const shoppingList = [];
+      const shoppingList = {};
 
       // Loop through each day and add a randomly selected meal
       daysOfWeek.forEach(day => {
@@ -88,11 +89,9 @@
         // Add the meal to the meal plan
         mealPlan.push(`${day}: ${randomMeal}`);
 
-        // Add the ingredients to the cumulative shopping list (avoid duplicates)
+        // Update the shopping list with quantities (number of times ingredient appears)
         ingredients.forEach(ingredient => {
-          if (!shoppingList.includes(ingredient)) {
-            shoppingList.push(ingredient);
-          }
+          shoppingList[ingredient] = (shoppingList[ingredient] || 0) + 1;
         });
       });
 
@@ -100,7 +99,7 @@
       displayList("planList", mealPlan);
 
       // Display the shopping list
-      displayList("listItems", shoppingList);
+      displayShoppingList("listItems", shoppingList);
     }
 
     // Function to display a list in the specified HTML element
@@ -110,6 +109,18 @@
       items.forEach(item => {
         const listItem = document.createElement("li");
         listItem.textContent = item;
+        listElement.appendChild(listItem);
+      });
+    }
+
+    // Function to display the shopping list with quantities
+    function displayShoppingList(elementId, shoppingList) {
+      const listElement = document.getElementById(elementId);
+      listElement.innerHTML = "";
+
+      Object.entries(shoppingList).forEach(([ingredient, quantity]) => {
+        const listItem = document.createElement("li");
+        listItem.textContent = `${ingredient} - Quantity: ${quantity}`;
         listElement.appendChild(listItem);
       });
     }
