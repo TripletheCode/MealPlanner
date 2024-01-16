@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -48,8 +48,8 @@
     }
     .remove-button {
       position: absolute;
-      top: 0;
-      right: 0;
+      top: -7px; 
+      right: -2px;
       margin: 5px;
       cursor: pointer;
       font-weight: bold;
@@ -112,6 +112,7 @@
     <option value="#dda0dd">Plum</option>
     <option value="#7fffd4">Aquamarine</option>
   </select>
+
   <!-- Display calendar-style layout for the meal plan -->
   <div id="calendar"></div>
 
@@ -133,7 +134,123 @@
   <button onclick="printList('Shopping List', 'listItems')">Print Shopping List</button>
 
   <script>
-    // ... (Previous JavaScript code)
+    // Predefined list of meals with ingredients
+    const predefinedMeals = {
+      "Oatmeal": ["Oats", "Milk", "Fruits"],
+      "Sandwich": ["Bread", "Cheese", "Tomato", "Lettuce", "Turkey"],
+      "Grilled Chicken": ["Chicken Breast", "Olive Oil", "Herbs", "Vegetables"],
+      "Pasta": ["Pasta", "Tomato Sauce", "Ground Beef", "Parmesan Cheese", "Roma Tomatoes"],
+      "Salad": ["Lettuce", "Tomato", "Cucumber", "Dressing"],
+      "Smoothie": ["Banana", "Yogurt", "Berries", "Honey"],
+      "Stir Fry": ["Tofu", "Broccoli", "Soy Sauce", "Rice"],
+      "Taco": ["Tortillas", "Ground Beef", "Lettuce", "Tomato", "Cheese", "Salsa"],
+      "Pizza": ["Pizza Dough", "Tomato Sauce", "Cheese", "Pepperoni", "Mushrooms"],
+      "Burger": ["Burger Patty", "Bun", "Lettuce", "Tomato", "Onion", "Ketchup"],
+      "Sushi": ["Sushi Rice", "Nori", "Fish", "Avocado", "Soy Sauce", "Wasabi"],
+      "Chicken Caesar Salad": ["Chicken Breast", "Romaine Lettuce", "Croutons", "Parmesan Cheese", "Caesar Dressing"],
+      "Vegetarian Burrito": ["Tortilla", "Black Beans", "Rice", "Corn", "Guacamole"],
+      "Fruit Salad": ["Mixed Fruits", "Honey", "Lime Juice"],
+      "Chicken Alfredo": ["Fettuccine Pasta", "Chicken Breast", "Alfredo Sauce", "Broccoli"],
+    };
+
+    // Function to generate a non-repeating meal plan  and shopping list for the week
+    function generateMealPlan() {
+      // Get the days of the week
+      const daysOfWeek = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+
+      // Initialize shopping list array
+      const shoppingList = {};
+
+      // Copy the predefined meals to avoid modification
+      const availableMeals = { ...predefinedMeals };
+
+      // Loop through each day and add a randomly selected meal without repeats
+      daysOfWeek.forEach(day => {
+        const availableMealNames = Object.keys(availableMeals);
+        
+        if (availableMealNames.length === 0) {
+          // If all meals have been used, break out of the loop
+          return;
+        }
+
+        const randomMealName = getRandomItem(availableMealNames);
+        const ingredients = availableMeals[randomMealName];
+
+        // Add the meal to the calendar
+        const cell = document.createElement("div");
+        cell.textContent = `${day}: ${randomMealName}`;
+        cell.style.backgroundColor = "#87ceeb"; // Light blue background for days
+        cell.style.padding = "10px";
+        cell.style.borderRadius = "5px";
+        document.getElementById("calendar").appendChild(cell);
+
+        // Update the shopping list with quantities (number of times ingredient appears)
+        ingredients.forEach(ingredient => {
+          shoppingList[ingredient] = (shoppingList[ingredient] || 0) + 1;
+        });
+
+        // Remove the used meal from the available meals
+        delete availableMeals[randomMealName];
+      });
+
+      // Display the shopping list
+      displayShoppingList("listItems", shoppingList);
+    }
+
+    // Function to add an item to the shopping list
+    function addItemToList() {
+      const itemName = document.getElementById("itemName").value;
+      const itemQuantity = parseInt(document.getElementById("itemQuantity").value, 10);
+
+      if (!isNaN(itemQuantity) && itemQuantity > 0) {
+        const listItem = document.createElement("li");
+        listItem.textContent = `${itemName} x${itemQuantity}`;
+        listItem.classList.add("remove-button");
+        listItem.onclick = function() {
+          this.parentNode.removeChild(this);
+        };
+        document.getElementById("listItems").appendChild(listItem);
+      }
+    }
+
+    // Function to display the shopping list
+    function displayShoppingList(listId, shoppingList) {
+      const listContainer = document.getElementById(listId);
+      listContainer.innerHTML = ""; // Clear previous list items
+
+      for (const item in shoppingList) {
+        const listItem = document.createElement("li");
+        listItem.textContent = `${item} x${shoppingList[item]}`;
+        listItem.classList.add("remove-button");
+        listItem.onclick = function() {
+          this.parentNode.removeChild(this);
+        };
+        listContainer.appendChild(listItem);
+      }
+    }
+
+    // Function to print a list
+    function printList(title, listId) {
+      const listContainer = document.getElementById(listId);
+      const items = Array.from(listContainer.children).map(item => item.textContent);
+      const formattedList = items.join('\n');
+      alert(`${title}:\n${formattedList}`);
+    }
+
+    // Function to change the background color
+    function changeBackgroundColor() {
+      const selectedColor = document.getElementById("colorPicker").value;
+      document.body.style.backgroundColor = selectedColor;
+      localStorage.setItem("backgroundColor", selectedColor);
+    }
+
+    // Function to get a random item from an array and remove it
+    function getRandomItem(array) {
+      const randomIndex = Math.floor(Math.random() * array.length);
+      const randomItem = array[randomIndex];
+      array.splice(randomIndex, 1); // Remove the selected item
+      return randomItem;
+    }
 
     // Load the saved background color or set default when the page is loaded
     window.onload = function() {
