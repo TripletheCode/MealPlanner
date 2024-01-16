@@ -1,4 +1,4 @@
-
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -21,69 +21,69 @@
     #calendar {
       display: grid;
       grid-template-columns: repeat(7, 1fr);
-      grid-gap: 10px;
-      margin-top: 20px;
-      margin-bottom: 20px;
-    }
-    ul {
-      list-style-type: none;
-      padding: 0;
-      margin: 0;
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-    }
-    li {
-      margin: 10px;
-      padding: 10px;
-      background-color: #fff; /* White background for list items */
-      border-radius: 5px;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-      transition: background-color 0.3s;
-      color: #000; /* Dark black text color */
-      position: relative;
-    }
-    li:hover {
-      background-color: #f0f0f0; /* Light gray background on hover */
-    }
-    .remove-button {
-      position: absolute;
-      top: -5px;
-      right: -2px;
-      cursor: pointer;
-      font-weight: bold;
-      color: #ff0000; /* Red color for the remove button */
-    }
-    button {
-      padding: 10px;
-      margin: 10px;
-      font-size: 16px;
-      cursor: pointer;
-      background-color: #2e8b57; /* Sea Green button color */
-      color: white;
-      border: none;
-      border-radius: 5px;
-      transition: background-color 0.3s;
-    }
-    button:hover {
-      background-color: #228b22; /* Forest Green button color on hover */
-    }
-    form {
-      margin-top: 20px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-    label {
-      margin-bottom: 5px;
-      color: #2e8b57; /* Sea Green label color */
-    }
-    input {
-      margin-bottom: 10px;
-      padding: 5px;
-      border: 1px solid #ccc;
-      border-radius: 3px;
-    }
+      grid-gap: 10px;    margin-top: 20px;
+    margin-bottom: 20px;
+  }
+  ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  li {
+    margin: 10px;
+    padding: 10px;
+    background-color: #fff; /* White background for list items */
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s;
+    color: #000; /* Dark black text color */
+    position: relative;
+  }
+  li:hover {
+    background-color: #f0f0f0; /* Light gray background on hover */
+  }
+  .remove-button {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    color: #ff0000; /* Red color for the remove button */
+  }
+  button {
+    padding: 10px;
+    margin: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    background-color: #2e8b57; /* Sea Green button color */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+  }
+  button:hover {
+    background-color: #228b22; /* Forest Green button color on hover */
+  }
+  form {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  label {
+    margin-bottom: 5px;
+    color: #2e8b57; /* Sea Green label color */
+  }
+  input {
+    margin-bottom: 10px;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+  }
   </style>
 </head>
 <body>
@@ -136,7 +136,14 @@
       "Salad": ["Lettuce", "Tomato", "Cucumber", "Dressing"],
       "Smoothie": ["Banana", "Yogurt", "Berries", "Honey"],
       "Stir Fry": ["Tofu", "Broccoli", "Soy Sauce", "Rice"],
-      // ... (rest of the predefined meals)
+      "Taco": ["Tortillas", "Ground Beef", "Lettuce", "Tomato", "Cheese", "Salsa"],
+      "Pizza": ["Pizza Dough", "Tomato Sauce", "Cheese", "Pepperoni", "Mushrooms"],
+      "Burger": ["Burger Patty", "Bun", "Lettuce", "Tomato", "Onion", "Ketchup"],
+      "Sushi": ["Sushi Rice", "Nori", "Fish", "Avocado", "Soy Sauce", "Wasabi"],
+      "Chicken Caesar Salad": ["Chicken Breast", "Romaine Lettuce", "Croutons", "Parmesan Cheese", "Caesar Dressing"],
+      "Vegetarian Burrito": ["Tortilla", "Black Beans", "Rice", "Corn", "Guacamole"],
+      "Fruit Salad": ["Mixed Fruits", "Honey", "Lime Juice"],
+      "Chicken Alfredo": ["Fettuccine Pasta", "Chicken Breast", "Alfredo Sauce", "Broccoli"],
     };
 
     // Function to generate a non-repeating meal plan and shopping list for the week
@@ -163,7 +170,7 @@
         const ingredients = availableMeals[randomMealName];
 
         // Add the meal to the calendar
-        const cell = document.createElement("div");
+        const cell =         document.createElement("div");
         cell.textContent = `${day}: ${randomMealName}`;
         cell.style.backgroundColor = "#87ceeb"; // Light blue background for days
         cell.style.padding = "10px";
@@ -197,14 +204,15 @@
       Object.entries(shoppingList).forEach(([ingredient, quantity]) => {
         const listItem = document.createElement("li");
         listItem.textContent = `${ingredient} - Quantity: ${quantity}`;
-        listElement.appendChild(listItem);
 
-        // Add a remove button next to each shopping list item
+        // Add a remove button at the top-right corner of each shopping list item
         const removeButton = document.createElement("span");
-        removeButton.textContent = " x";
+        removeButton.textContent = "x";
         removeButton.className = "remove-button";
         removeButton.onclick = function() { removeItemFromList(ingredient); };
         listItem.appendChild(removeButton);
+
+        listElement.appendChild(listItem);
       });
     }
 
@@ -255,9 +263,9 @@
         const listItem = document.createElement("li");
         listItem.textContent = `${itemName} - Quantity: ${itemQuantity}`;
 
-        // Add a remove button next to the new shopping list item
+        // Add a remove button at the top-right corner of the new shopping list item
         const removeButton = document.createElement("span");
-        removeButton.textContent = " x";
+        removeButton.textContent = "x";
         removeButton.className = "remove-button";
         removeButton.onclick = function() { removeItemFromList(itemName); };
         listItem.appendChild(removeButton);
@@ -285,4 +293,3 @@
   </script>
 </body>
 </html>
-
