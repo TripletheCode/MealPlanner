@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -47,8 +47,8 @@
   }
   .remove-button {
     position: absolute;
-    top: 0;
-    right: 0;
+    top: -5px;
+    right: -2px;
     margin: 5px;
     cursor: pointer;
     font-weight: bold;
