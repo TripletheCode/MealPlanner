@@ -1,3 +1,4 @@
+
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -77,7 +78,6 @@
   </style>
 </head>
 <body>
-  <h1>Weekly Meal Planner</h1>
 
   <!-- Color picker for background color selection -->
   <label for="colorPicker">Select background color:</label>
