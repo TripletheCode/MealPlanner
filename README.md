@@ -48,8 +48,8 @@
     }
     .remove-button {
       position: absolute;
-      top: -5px;
-      right: -5px;
+      top: -2px;
+      right: -2px;
       cursor: pointer;
       font-weight: bold;
       color: #ff0000; /* Red color for the remove button */
