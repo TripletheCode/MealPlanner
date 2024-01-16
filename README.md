@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -29,9 +28,12 @@
       list-style-type: none;
       padding: 0;
       margin: 0;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
     }
     li {
-      margin: 10px 0;
+      margin: 10px;
       padding: 10px;
       background-color: #fff; /* White background for list items */
       border-radius: 5px;
@@ -201,3 +203,5 @@
       setTimeout(generateMealPlan, 100);
     };
   </script>
+</body>
+</html>
