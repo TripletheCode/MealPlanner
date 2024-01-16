@@ -1,4 +1,3 @@
-
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -102,14 +101,15 @@
   <!-- Display shopping list -->
   <section id="shoppingList">
     <h2>Shopping List</h2>
-    <ul id="listItems"></ul>
-    <!-- Form to add additional items to the shopping list -->
-    <form id="addItemForm">
+    <ul id="listItems" onclick="removeItem(event)"></ul>
+    <!-- Form to add and remove items from the shopping list -->
+    <form id="listForm">
       <label for="itemName">Item Name:</label>
       <input type="text" id="itemName" required>
       <label for="itemQuantity">Quantity:</label>
       <input type="number" id="itemQuantity" required>
       <button type="button" onclick="addItemToList()">Add to List</button>
+      <button type="button" onclick="removeSelectedItem()">Remove Selected Item</button>
     </form>
   </section>
 
@@ -229,6 +229,30 @@
         // Clear the form fields after adding the item
         document.getElementById("itemName").value = "";
         document.getElementById("itemQuantity").value = "";
+      }
+    }
+
+    // Function to remove the selected item from the shopping list
+    function removeSelectedItem() {
+      const listElement = document.getElementById("listItems");
+      const selectedItems = listElement.querySelectorAll(".selected");
+
+      selectedItems.forEach(item => {
+        listElement.removeChild(item);
+      });
+    }
+
+    // Function to handle item selection and removal
+    function removeItem(event) {
+      const selectedItems = document.querySelectorAll("#listItems .selected");
+
+      selectedItems.forEach(item => {
+        item.classList.remove("selected");
+      });
+
+      const clickedItem = event.target;
+      if (clickedItem.tagName === "LI") {
+        clickedItem.classList.toggle("selected");
       }
     }
 
