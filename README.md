@@ -1,4 +1,4 @@
-
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -32,6 +32,7 @@
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
+      text-align: left; /* Ensure the list is left-aligned */
     }
     li {
       margin: 10px;
@@ -48,7 +49,7 @@
     }
     .remove-button {
       position: absolute;
-      top: 0; 
+      top: 0;
       right: 0;
       margin: 5px;
       cursor: pointer;
@@ -130,30 +131,17 @@
     </form>
   </section>
 
-  <!-- Print button for shopping list -->
+  <!-- Print button for shopping  list -->
   <button onclick="printList('Shopping List', 'listItems')">Print Shopping List</button>
 
   <script>
     // Predefined list of meals with ingredients
     const predefinedMeals = {
       "Oatmeal": ["Oats", "Milk", "Fruits"],
-      "Sandwich": ["Bread", "Cheese", "Tomato", "Lettuce", "Turkey"],
-      "Grilled Chicken": ["Chicken Breast", "Olive Oil", "Herbs", "Vegetables"],
-      "Pasta": ["Pasta", "Tomato Sauce", "Ground Beef", "Parmesan Cheese", "Roma Tomatoes"],
-      "Salad": ["Lettuce", "Tomato", "Cucumber", "Dressing"],
-      "Smoothie": ["Banana", "Yogurt", "Berries", "Honey"],
-      "Stir Fry": ["Tofu", "Broccoli", "Soy Sauce", "Rice"],
-      "Taco": ["Tortillas", "Ground Beef", "Lettuce", "Tomato", "Cheese", "Salsa"],
-      "Pizza": ["Pizza Dough", "Tomato Sauce", "Cheese", "Pepperoni", "Mushrooms"],
-      "Burger": ["Burger Patty", "Bun", "Lettuce", "Tomato", "Onion", "Ketchup"],
-      "Sushi": ["Sushi Rice", "Nori", "Fish", "Avocado", "Soy Sauce", "Wasabi"],
-      "Chicken Caesar Salad": ["Chicken Breast", "Romaine Lettuce", "Croutons", "Parmesan Cheese", "Caesar Dressing"],
-      "Vegetarian Burrito": ["Tortilla", "Black Beans", "Rice", "Corn", "Guacamole"],
-      "Fruit Salad": ["Mixed Fruits", "Honey", "Lime Juice"],
-      "Chicken Alfredo": ["Fettuccine Pasta", "Chicken Breast", "Alfredo Sauce", "Broccoli"],
+      // Add more sample meals and ingredients here
     };
 
-    // Function to generate a non-repeating meal plan  and shopping list for the week
+    // Function to generate a non-repeating meal plan and shopping list for the week
     function generateMealPlan() {
       // Get the days of the week
       const daysOfWeek = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
@@ -214,21 +202,21 @@
     }
 
     // Function to display the shopping list
-function displayShoppingList(listId, shoppingList) {
-  const listContainer = document.getElementById(listId);
-  listContainer.innerHTML = ""; // Clear previous list items
+    function displayShoppingList(listId, shoppingList) {
+      const listContainer = document.getElementById(listId);
+      listContainer.innerHTML = ""; // Clear previous list items
 
-  for (const item in shoppingList) {
-    const listItem = document.createElement("li");
-    listItem.textContent = `${item} x${shoppingList[item]}`;
-    listItem.classList.add("remove-button");
-    listItem.onclick = function() {
-      this.parentNode.removeChild(this);
-    };
-    listContainer.appendChild(listItem);
-  }
-  listContainer.style.textAlign = "left"; // Ensure the list is left-aligned
-}
+      for (const item in shoppingList) {
+        const listItem = document.createElement("li");
+        listItem.textContent = `${item} x${shoppingList[item]}`;
+        listItem.classList.add("remove-button");
+        listItem.onclick = function() {
+          this.parentNode.removeChild(this);
+        };
+        listContainer.appendChild(listItem);
+      }
+      listContainer.style.textAlign = "left"; // Ensure the list is left-aligned
+    }
 
     // Function to print a list
     function printList(title, listId) {
@@ -266,5 +254,3 @@ function displayShoppingList(listId, shoppingList) {
       setTimeout(generateMealPlan, 100);
     };
   </script>
-</body>
-</html>
