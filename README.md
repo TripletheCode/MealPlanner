@@ -114,7 +114,7 @@
     <option value="#7fffd4">Aquamarine</option>
   </select>
 
-  <!-- Display calendar-style layout for the meal plan -->
+    <!-- Display calendar-style layout for the meal plan -->
   <div id="calendar"></div>
 
   <!-- Display shopping list -->
@@ -131,7 +131,7 @@
     </form>
   </section>
 
-  <!-- Print button for shopping  list -->
+  <!-- Print button for shopping list -->
   <button onclick="printList('Shopping List', 'listItems')">Print Shopping List</button>
 
   <script>
@@ -142,48 +142,48 @@
     };
 
     // Function to generate a non-repeating meal plan and shopping list for the week
- function generateMealPlan() {
-   // Get the days of the week
-  const daysOfWeek = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+    function generateMealPlan() {
+      // Get the days of the week
+      const daysOfWeek = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 
-  // Initialize shopping list array
-  const shoppingList = {};
+      // Initialize shopping list array
+      const shoppingList = {};
 
-  // Copy the predefined meals to avoid modification
-  const availableMeals = { ...predefinedMeals };
+      // Copy the predefined meals to avoid modification
+      const availableMeals = { ...predefinedMeals };
 
-  // Loop through each day and add a randomly selected meal without repeats
-  daysOfWeek.forEach(day => {
-    const availableMealNames = Object.keys(availableMeals);
+      // Loop through each day and add a randomly selected meal without repeats
+      daysOfWeek.forEach(day => {
+        const availableMealNames = Object.keys(availableMeals);
 
-    if (availableMealNames.length === 0) {
-      // If all meals have been used, break out of the loop
-      return;
+        if (availableMealNames.length === 0) {
+          // If all meals have been used, break out of the loop
+          return;
+        }
+
+        const randomMealName = getRandomItem(availableMealNames);
+        const ingredients = availableMeals[randomMealName];
+
+        // Add the meal to the calendar
+        const cell = document.createElement("div");
+        cell.textContent = `${day}: ${randomMealName}`;
+        cell.style.backgroundColor = "#87ceeb"; // Light blue background for days
+        cell.style.padding = "10px";
+        cell.style.borderRadius = "5px";
+        document.getElementById("calendar").appendChild(cell);
+
+        // Update the shopping list with quantities (number of times ingredient appears)
+        ingredients.forEach(ingredient => {
+          shoppingList[ingredient] = (shoppingList[ingredient] || 0) + 1;
+        });
+
+        // Remove the used meal from the available meals
+        delete availableMeals[randomMealName];
+      });
+
+      // Display the shopping list
+      displayShoppingList("listItems", shoppingList);
     }
-
-    const randomMealName = getRandomItem(availableMealNames);
-    const ingredients = availableMeals[randomMealName];
-
-    // Add the meal to the calendar
-    const cell = document.createElement("div");
-    cell.textContent = `${day}: ${randomMealName}`;
-    cell.style.backgroundColor = "#87ceeb"; // Light blue background for days
-    cell.style.padding = "10px";
-    cell.style.borderRadius = "5px";
-    document.getElementById("calendar").appendChild(cell);
-
-    // Update the shopping list with quantities (number of times ingredient appears)
-    ingredients.forEach(ingredient => {
-      shoppingList[ingredient] = (shoppingList[ingredient] || 0) + 1;
-    });
-
-    // Remove the used meal from the available meals
-    delete availableMeals[randomMealName];
-  });
-
-  // Display the shopping list
-  displayShoppingList("listItems", shoppingList);
-}
 
     // Function to add an item to the shopping list
     function addItemToList() {
@@ -254,3 +254,5 @@
       setTimeout(generateMealPlan, 100);
     };
   </script>
+</body>
+</html>
