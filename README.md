@@ -48,7 +48,7 @@
     }
     .remove-button {
       position: absolute;
-      top: -2px;
+      top: -5px;
       right: -2px;
       cursor: pointer;
       font-weight: bold;
