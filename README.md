@@ -20,7 +20,7 @@
     }
     #calendar {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      grid-template-columns: repeat(7, 1fr);
       grid-gap: 10px;
       margin-top: 20px;
       margin-bottom: 20px;
@@ -32,7 +32,6 @@
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
-      text-align: left; /* Ensure the list is left-aligned */
     }
     li {
       margin: 10px;
@@ -86,12 +85,6 @@
       border: 1px solid #ccc;
       border-radius: 3px;
     }
-
-    @media screen and (max-width: 600px) {
-      #calendar {
-        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-      }
-    }
   </style>
 </head>
 <body>
@@ -114,7 +107,7 @@
     <option value="#7fffd4">Aquamarine</option>
   </select>
 
-    <!-- Display calendar-style layout for the meal plan -->
+  <!-- Display calendar-style layout for the meal plan -->
   <div id="calendar"></div>
 
   <!-- Display shopping list -->
@@ -138,7 +131,13 @@
     // Predefined list of meals with ingredients
     const predefinedMeals = {
       "Oatmeal": ["Oats", "Milk", "Fruits"],
-      // Add more sample meals and ingredients here
+      "Sandwich": ["Bread", "Cheese", "Tomato", "Lettuce", "Turkey"],
+      "Grilled Chicken": ["Chicken Breast", "Olive Oil", "Herbs", "Vegetables"],
+      "Pasta": ["Pasta", "Tomato Sauce", "Ground Beef", "Parmesan Cheese", "Roma Tomatoes"],
+      "Salad": ["Lettuce", "Tomato", "Cucumber", "Dressing"],
+      "Smoothie": ["Banana", "Yogurt", "Berries", "Honey"],
+      "Stir Fry": ["Tofu", "Broccoli", "Soy Sauce", "Rice"],
+      // ... (rest of the predefined meals)
     };
 
     // Function to generate a non-repeating meal plan and shopping list for the week
@@ -155,7 +154,7 @@
       // Loop through each day and add a randomly selected meal without repeats
       daysOfWeek.forEach(day => {
         const availableMealNames = Object.keys(availableMeals);
-
+        
         if (availableMealNames.length === 0) {
           // If all meals have been used, break out of the loop
           return;
@@ -185,60 +184,92 @@
       displayShoppingList("listItems", shoppingList);
     }
 
-    // Function to add an item to the shopping list
-    function addItemToList() {
-      const itemName = document.getElementById("itemName").value;
-      const itemQuantity = parseInt(document.getElementById("itemQuantity").value, 10);
-
-      if (!isNaN(itemQuantity) && itemQuantity > 0) {
-        const listItem = document.createElement("li");
-        listItem.textContent = `${itemName} x${itemQuantity}`;
-        listItem.classList.add("remove-button");
-        listItem.onclick = function() {
-          this.parentNode.removeChild(this);
-        };
-        document.getElementById("listItems").appendChild(listItem);
-      }
+    // Function to get a random item from an array
+    function getRandomItem(array) {
+      const randomIndex = Math.floor(Math.random() * array.length);
+      return array[randomIndex];
     }
 
-    // Function to display the shopping list
-    function displayShoppingList(listId, shoppingList) {
-      const listContainer = document.getElementById(listId);
-      listContainer.innerHTML = ""; // Clear previous list items
+    // Function to display the shopping list with quantities
+    function displayShoppingList(elementId, shoppingList) {
+      const listElement = document.getElementById(elementId);
+      listElement.innerHTML = "";
 
-      for (const item in shoppingList) {
+      Object.entries(shoppingList).forEach(([ingredient, quantity]) => {
         const listItem = document.createElement("li");
-        listItem.textContent = `${item} x${shoppingList[item]}`;
-        listItem.classList.add("remove-button");
-        listItem.onclick = function() {
-          this.parentNode.removeChild(this);
-        };
-        listContainer.appendChild(listItem);
-      }
-      listContainer.style.textAlign = "left"; // Ensure the list is left-aligned
+        listItem.textContent = `${ingredient} - Quantity: ${quantity}`;
+
+        // Add a remove button at the top-right corner of each shopping list item
+        const removeButton = document.createElement("span");
+        removeButton.textContent = "x";
+        removeButton.className = "remove-button";
+        removeButton.onclick = function() { removeItemFromList(ingredient); };
+        listItem.appendChild(removeButton);
+
+        listElement.appendChild(listItem);
+      });
     }
 
-    // Function to print a list
-    function printList(title, listId) {
-      const listContainer = document.getElementById(listId);
-      const items = Array.from(listContainer.children).map(item => item.textContent);
-      const formattedList = items.join('\n');
-      alert(`${title}:\n${formattedList}`);
+    // Function to remove the selected item from the shopping list
+    function removeItemFromList(ingredient) {
+      const listElement = document.getElementById("listItems");
+      const items = listElement.getElementsByTagName("li");
+
+      for (let i = 0; i < items.length; i++) {
+        if (items[i].textContent.startsWith(ingredient)) {
+          listElement.removeChild(items[i]);
+          break;
+        }
+      }
     }
 
     // Function to change the background color
     function changeBackgroundColor() {
       const selectedColor = document.getElementById("colorPicker").value;
       document.body.style.backgroundColor = selectedColor;
+
+      // Save the selected color to localStorage
       localStorage.setItem("backgroundColor", selectedColor);
     }
 
-    // Function to get a random item from an array and remove it
-    function getRandomItem(array) {
-      const randomIndex = Math.floor(Math.random() * array.length);
-      const randomItem = array[randomIndex];
-      array.splice(randomIndex, 1); // Remove the selected item
-      return randomItem;
+    // Function to print the specified list
+    function printList(listName, elementId) {
+      const listElement = document.getElementById(elementId);
+      const listItems = listElement.getElementsByTagName("li");
+      const printableList = Array.from(listItems).map(item => item.textContent).join('\n');
+
+      // Create a new window for printing
+      const printWindow = window.open('', '_blank');
+      printWindow.document.write(`<pre>${listName}\n\n${printableList}</pre>`);
+      printWindow.document.close();
+
+      // Print the window
+      printWindow.print();
+    }
+
+    // Function to add an additional item to the shopping list
+    function addItemToList() {
+      const itemName = document.getElementById("itemName").value;
+      const itemQuantity = parseInt(document.getElementById("itemQuantity").value, 10);
+
+      if (itemName && !isNaN(itemQuantity) && itemQuantity > 0) {
+        const listElement = document.getElementById("listItems");
+        const listItem = document.createElement("li");
+        listItem.textContent = `${itemName} - Quantity: ${itemQuantity}`;
+
+        // Add a remove button at the top-right corner of the new shopping list item
+        const removeButton = document.createElement("span");
+        removeButton.textContent = "x";
+        removeButton.className = "remove-button";
+        removeButton.onclick = function() { removeItemFromList(itemName); };
+        listItem.appendChild(removeButton);
+
+        listElement.appendChild(listItem);
+
+        // Clear the form fields after adding the item
+        document.getElementById("itemName").value = "";
+        document.getElementById("itemQuantity").value = "";
+      }
     }
 
     // Load the saved background color or set default when the page is loaded
