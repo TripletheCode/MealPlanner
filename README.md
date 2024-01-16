@@ -230,4 +230,6 @@
       setTimeout(generateMealPlan, 100);
     };
   </script>
+</body>
+</html>
 
