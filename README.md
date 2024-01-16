@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -40,6 +39,7 @@
       border-radius: 5px;
       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
       transition: background-color 0.3s;
+      color: #333; /* Dark text color */
     }
     li:hover {
       background-color: #f0f0f0; /* Light gray background on hover */
@@ -66,6 +66,7 @@
     }
     label {
       margin-bottom: 5px;
+      color: #2e8b57; /* Sea Green label color */
     }
     input {
       margin-bottom: 10px;
@@ -76,7 +77,6 @@
   </style>
 </head>
 <body>
-  <h1>Weekly Meal Planner</h1>
 
   <!-- Color picker for background color selection -->
   <label for="colorPicker">Select background color:</label>
