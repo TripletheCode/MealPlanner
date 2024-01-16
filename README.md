@@ -1,4 +1,3 @@
-
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -9,6 +8,7 @@
       font-family: 'Arial', sans-serif;
       text-align: center;
       margin: 20px;
+      background-color: #f0f0f0; /* Set a default background color */
       transition: background-color 0.5s;
     }
     h1 {
@@ -19,6 +19,23 @@
     }
     #colorPicker {
       margin-top: 20px;
+    }
+    ul {
+      list-style-type: none;
+      padding: 0;
+    }
+    li {
+      margin: 8px 0;
+    }
+    button {
+      padding: 10px;
+      margin: 10px;
+      font-size: 16px;
+      cursor: pointer;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 5px;
     }
   </style>
 </head>
@@ -164,8 +181,10 @@
       document.body.style.backgroundColor = backgroundColor;
       document.getElementById("colorPicker").value = backgroundColor;
 
-      generateMealPlan();
+      // Delay the meal plan generation to allow smoother background color transition
+      setTimeout(generateMealPlan, 100);
     };
   </script>
 </body>
 </html>
+  
